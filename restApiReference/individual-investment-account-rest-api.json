@@ -124,11 +124,7 @@
                 {
                     "200":
                     {
-                        "description": "Eligibility result",
-                        "schema":
-                        {
-                            "$ref": "#/components/schemas/EligibilityResponse"
-                        }
+                        "description": "Eligiblity check passed"
                     },
                     "400":
                     {
@@ -214,11 +210,7 @@
                 {
                     "200":
                     {
-                        "description": "Account created",
-                        "schema":
-                        {
-                            "$ref": "#/components/schemas/IiaResponse"
-                        }
+                        "description": "Account created"
                     },
                     "400":
                     {
@@ -257,7 +249,7 @@
                         "description": "Unexpected error",
                         "schema":
                         {
-                            "$ref": "#/components/schemas/IiaResponse"
+                            "$ref": "#/components/schemas/ErrorResponse"
                         }
                     }
                 }
@@ -304,11 +296,7 @@
                 {
                     "200":
                     {
-                        "description": "Account closed",
-                        "schema":
-                        {
-                            "$ref": "#/components/schemas/IiaResponse"
-                        }
+                        "description": "Account closed"
                     },
                     "400":
                     {
@@ -358,28 +346,6 @@
     {
         "schemas":
         {
-            "EligibilityResponse":
-            {
-                "type": "object",
-                "properties":
-                {
-                    "eligibility":
-                    {
-                        "type": "boolean"
-                    }
-                }
-            },
-            "IiaResponse":
-            {
-                "type": "object",
-                "properties":
-                {
-                    "response":
-                    {
-                        "type": "string"
-                    }
-                }
-            },
             "ErrorResponse":
             {
                 "type": "object",
@@ -389,15 +355,6 @@
                     {
                         "type": "string",
                         "format": "date-time"
-                    },
-                    "status":
-                    {
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "error":
-                    {
-                        "type": "string"
                     },
                     "description":
                     {
@@ -429,6 +386,10 @@
                     "field":
                     {
                         "type": "string"
+                    },
+                    "code":
+                    {
+                        "type": "integer"
                     },
                     "message":
                     {
@@ -538,7 +499,7 @@
                     "dateOfBirth":
                     {
                         "type": "string",
-                        "example": "01/01/1970",
+                        "example": "1970-01-01",
                         "minLength": 1,
                         "description": "Investor's date of birth (ISO 8601: YYYY-MM-DD)"
                     }
@@ -549,7 +510,6 @@
                     "dateOfBirth",
                     "firstName",
                     "investorRegNumber",
-                    "startDate",
                     "surname"
                 ]
             },
@@ -594,14 +554,14 @@
                     "dateOfBirth":
                     {
                         "type": "string",
-                        "example": "01/01/1970",
+                        "example": "1970-01-01",
                         "minLength": 1,
                         "description": "Investor's date of birth (ISO 8601: YYYY-MM-DD)"
                     },
                     "startDate":
                     {
                         "type": "string",
-                        "example": "01/01/2027",
+                        "example": "2027-01-01",
                         "minLength": 1,
                         "description": "Account start date (ISO 8601: YYYY-MM-DD)"
                     }
@@ -641,7 +601,7 @@
                     "endDate":
                     {
                         "type": "string",
-                        "example": "31/12/2027",
+                        "example": "2027-12-31",
                         "minLength": 1,
                         "description": "Account end date (ISO 8601: YYYY-MM-DD)"
                     }

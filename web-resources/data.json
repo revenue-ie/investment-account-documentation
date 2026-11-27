@@ -58,7 +58,7 @@
         "environment": "PIT Current Version",
         "dateLastUpdated": "25/11/2026",
         "category": "navigation",
-        "hidden": true
+        "hidden": false
       },
       {
         "link": "restApiReference/individual-investment-account-rest-api-swagger.json",
@@ -68,7 +68,7 @@
         "environment": "PIT Current Version",
         "dateLastUpdated": "25/11/2026",
         "category": "navigation",
-        "hidden": true
+        "hidden": false
       },
       {
         "link": "restguide",
