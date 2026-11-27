@@ -1,0 +1,754 @@
+{
+    "openapi": "3.1.0",
+    "info":
+    {
+        "title": "OpenAPI definition",
+        "version": "v0.1"
+    },
+    "paths":
+    {
+        "/v1/rest/handshake":
+        {
+            "get":
+            {
+                "tags":
+                [
+                    "handshake-controller"
+                ],
+                "summary": "Handshake request to test authentication",
+                "description": "Handshake request to test authentication",
+                "operationId": "handshake",
+                "parameters":
+                [
+                    {
+                        "name": "softwareUsed",
+                        "in": "query",
+                        "schema":
+                        {
+                            "type": "string"
+                        },
+                        "description": "Name of third party software product.",
+                        "required": true
+                    },
+                    {
+                        "name": "softwareVersion",
+                        "in": "query",
+                        "schema":
+                        {
+                            "type": "string"
+                        },
+                        "description": "Version of third party software product.",
+                        "required": true
+                    },
+                    {
+                        "name": "accountProviderRegistrationNumber ",
+                        "in": "query",
+                        "schema":
+                        {
+                            "type": "string"
+                        },
+                        "description": "Account Provider's Investment Account tax registration number. Conditionally optional, required if submission is filed using an agent cert.",
+                        "required": false
+                    },
+                    {
+                        "name": "agentTain",
+                        "in": "query",
+                        "schema":
+                        {
+                            "type": "string"
+                        },
+                        "description": "Tax Advisor Identification Number. Conditionally optional, required if submission is filed using an agent cert.",
+                        "required": false
+                    }
+                ],
+                "responses":
+                {
+                    "200":
+                    {
+                        "description": "Authentication succeeded"
+                    },
+                    "401":
+                    {
+                        "description": "Missing or invalid credentials",
+                        "content":
+                        {
+                            "*/*":
+                            {
+                                "schema":
+                                {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403":
+                    {
+                        "description": "Authenticated but not permitted",
+                        "content":
+                        {
+                            "*/*":
+                            {
+                                "schema":
+                                {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500":
+                    {
+                        "description": "Unexpected error",
+                        "content":
+                        {
+                            "*/*":
+                            {
+                                "schema":
+                                {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/rest/account/eligibility":
+        {
+            "post":
+            {
+                "tags":
+                [
+                    "individual-investment-account-controller"
+                ],
+                "summary": "Check an investors eligibility",
+                "description": "Check the eligibility of an investor for an Individual Investment Account",
+                "operationId": "eligibilityCheck",
+                "requestBody":
+                {
+                    "content":
+                    {
+                        "application/json":
+                        {
+                            "schema":
+                            {
+                                "$ref": "#/components/schemas/EligibilityRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses":
+                {
+                    "200":
+                    {
+                        "description": "Result of the Investor eligiblity check for Individual Investment Account: Pass/fail",
+                        "content":
+                        {
+                            "application/json":
+                            {
+                                "schema":
+                                {
+                                    "$ref": "#/components/schemas/EligibilityResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400":
+                    {
+                        "description": "Validation failed or request body missing/malformed",
+                        "content":
+                        {
+                            "application/json":
+                            {
+                                "schema":
+                                {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401":
+                    {
+                        "description": "Missing or invalid credentials",
+                        "content":
+                        {
+                            "application/json":
+                            {
+                                "schema":
+                                {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403":
+                    {
+                        "description": "Authenticated but not permitted",
+                        "content":
+                        {
+                            "application/json":
+                            {
+                                "schema":
+                                {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "415":
+                    {
+                        "description": "Content type must be application/json",
+                        "content":
+                        {
+                            "application/json":
+                            {
+                                "schema":
+                                {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500":
+                    {
+                        "description": "Unexpected error",
+                        "content":
+                        {
+                            "application/json":
+                            {
+                                "schema":
+                                {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/rest/account/create":
+        {
+            "post":
+            {
+                "tags":
+                [
+                    "individual-investment-account-controller"
+                ],
+                "summary": "Create an account",
+                "description": "Create an Individual Investment Account for an investor",
+                "operationId": "createAccount",
+                "requestBody":
+                {
+                    "content":
+                    {
+                        "application/json":
+                        {
+                            "schema":
+                            {
+                                "$ref": "#/components/schemas/CreateAccountRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses":
+                {
+                    "200":
+                    {
+                        "description": "Account created",
+                        "content":
+                        {
+                            "application/json":
+                            {
+                                "schema":
+                                {
+                                    "$ref": "#/components/schemas/IiaResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400":
+                    {
+                        "description": "Validation failed or request body missing/malformed",
+                        "content":
+                        {
+                            "application/json":
+                            {
+                                "schema":
+                                {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401":
+                    {
+                        "description": "Missing or invalid credentials",
+                        "content":
+                        {
+                            "application/json":
+                            {
+                                "schema":
+                                {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403":
+                    {
+                        "description": "Authenticated but not permitted",
+                        "content":
+                        {
+                            "application/json":
+                            {
+                                "schema":
+                                {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "415":
+                    {
+                        "description": "Content type must be application/json",
+                        "content":
+                        {
+                            "application/json":
+                            {
+                                "schema":
+                                {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500":
+                    {
+                        "description": "Unexpected error",
+                        "content":
+                        {
+                            "*/*":
+                            {
+                                "schema":
+                                {
+                                    "$ref": "#/components/schemas/IiaResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/rest/account/close":
+        {
+            "post":
+            {
+                "tags":
+                [
+                    "individual-investment-account-controller"
+                ],
+                "summary": "Close an account",
+                "description": "Close an Individual Investment Account for an investor",
+                "operationId": "closeAccount",
+                "requestBody":
+                {
+                    "content":
+                    {
+                        "application/json":
+                        {
+                            "schema":
+                            {
+                                "$ref": "#/components/schemas/CloseAccountRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses":
+                {
+                    "200":
+                    {
+                        "description": "Account closed",
+                        "content":
+                        {
+                            "application/json":
+                            {
+                                "schema":
+                                {
+                                    "$ref": "#/components/schemas/IiaResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400":
+                    {
+                        "description": "Validation failed or request body missing/malformed",
+                        "content":
+                        {
+                            "application/json":
+                            {
+                                "schema":
+                                {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401":
+                    {
+                        "description": "Missing or invalid credentials",
+                        "content":
+                        {
+                            "application/json":
+                            {
+                                "schema":
+                                {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403":
+                    {
+                        "description": "Authenticated but not permitted",
+                        "content":
+                        {
+                            "application/json":
+                            {
+                                "schema":
+                                {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "415":
+                    {
+                        "description": "Content type must be application/json",
+                        "content":
+                        {
+                            "application/json":
+                            {
+                                "schema":
+                                {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500":
+                    {
+                        "description": "Unexpected error",
+                        "content":
+                        {
+                            "application/json":
+                            {
+                                "schema":
+                                {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components":
+    {
+        "schemas":
+        {
+            "EligibilityResponse":
+            {
+                "type": "object",
+                "properties":
+                {
+                    "eligibility":
+                    {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "IiaResponse":
+            {
+                "type": "object",
+                "properties":
+                {
+                    "response":
+                    {
+                        "type": "string"
+                    }
+                }
+            },
+            "ErrorResponse":
+            {
+                "type": "object",
+                "properties":
+                {
+                    "timestamp":
+                    {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "status":
+                    {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "error":
+                    {
+                        "type": "string"
+                    },
+                    "description":
+                    {
+                        "type": "string"
+                    },
+                    "code":
+                    {
+                        "type": "string"
+                    },
+                    "path":
+                    {
+                        "type": "string"
+                    },
+                    "errors":
+                    {
+                        "type": "array",
+                        "items":
+                        {
+                            "$ref": "#/components/schemas/FieldError"
+                        }
+                    }
+                }
+            },
+            "FieldError":
+            {
+                "type": "object",
+                "properties":
+                {
+                    "field":
+                    {
+                        "type": "string"
+                    },
+                    "message":
+                    {
+                        "type": "string"
+                    }
+                }
+            },
+            "Address":
+            {
+                "type": "object",
+                "properties":
+                {
+                    "addressLines":
+                    {
+                        "$ref": "#/components/schemas/AddressLines",
+                        "description": "Address line components"
+                    },
+                    "county":
+                    {
+                        "type": "string",
+                        "description": "County name",
+                        "example": "Cavan",
+                        "maxLength": 50,
+                        "minLength": 0
+                    },
+                    "eircode":
+                    {
+                        "type": "string",
+                        "description": "Irish Eircode",
+                        "example": "A12 BC34",
+                        "minLength": 1,
+                        "pattern": "^[A-Z0-9]{3}\\s?[A-Z0-9]{4}$"
+                    }
+                },
+                "required":
+                [
+                    "county",
+                    "eircode"
+                ]
+            },
+            "AddressLines":
+            {
+                "type": "object",
+                "properties":
+                {
+                    "addressLine1":
+                    {
+                        "type": "string",
+                        "description": "First line of the address",
+                        "example": "123 Fake St",
+                        "maxLength": 100,
+                        "minLength": 0
+                    },
+                    "addressLine2":
+                    {
+                        "type": "string",
+                        "description": "Second line of the address",
+                        "example": "Some Road",
+                        "maxLength": 100,
+                        "minLength": 0
+                    },
+                    "addressLine3":
+                    {
+                        "type": "string",
+                        "description": "Third line of the address",
+                        "example": "The Town",
+                        "maxLength": 100,
+                        "minLength": 0
+                    }
+                }
+            },
+            "EligibilityRequest":
+            {
+                "type": "object",
+                "properties":
+                {
+                    "investorRegNumber":
+                    {
+                        "type": "string",
+                        "description": "The tax registration number of the investor",
+                        "example": "01234567AB",
+                        "minLength": 1,
+                        "pattern": "^\\d{7,8}[A-Z]{1,2}$"
+                    },
+                    "firstName":
+                    {
+                        "type": "string",
+                        "example": "John",
+                        "minLength": 1
+                    },
+                    "surname":
+                    {
+                        "type": "string",
+                        "example": "Smith",
+                        "minLength": 1
+                    },
+                    "address":
+                    {
+                        "$ref": "#/components/schemas/Address",
+                        "description": "The address object containing address lines, county, and eircode"
+                    },
+                    "dateOfBirth":
+                    {
+                        "type": "string",
+                        "example": "01/01/1970",
+                        "minLength": 1
+                    },
+                    "startDate":
+                    {
+                        "type": "string",
+                        "example": "01/01/2027",
+                        "minLength": 1
+                    }
+                },
+                "required":
+                [
+                    "address",
+                    "dateOfBirth",
+                    "firstName",
+                    "investorRegNumber",
+                    "startDate",
+                    "surname"
+                ]
+            },
+            "CreateAccountRequest":
+            {
+                "type": "object",
+                "properties":
+                {
+                    "providerRegNumber":
+                    {
+                        "type": "string",
+                        "description": "The tax registration number of the provider",
+                        "example": "01234567AB",
+                        "minLength": 1,
+                        "pattern": "^\\d{7,8}[A-Z]{1,2}$"
+                    },
+                    "investorRegNumber":
+                    {
+                        "type": "string",
+                        "description": "The tax registration number of the investor",
+                        "example": "01234567AB",
+                        "minLength": 1,
+                        "pattern": "^\\d{7,8}[A-Z]{1,2}$"
+                    },
+                    "firstName":
+                    {
+                        "type": "string",
+                        "example": "John",
+                        "minLength": 1
+                    },
+                    "surname":
+                    {
+                        "type": "string",
+                        "example": "Smith",
+                        "minLength": 1
+                    },
+                    "address":
+                    {
+                        "$ref": "#/components/schemas/Address",
+                        "description": "The address object containing address lines, county, and eircode"
+                    },
+                    "dateOfBirth":
+                    {
+                        "type": "string",
+                        "example": "01/01/1970",
+                        "minLength": 1
+                    },
+                    "startDate":
+                    {
+                        "type": "string",
+                        "example": "01/01/2027",
+                        "minLength": 1
+                    }
+                },
+                "required":
+                [
+                    "address",
+                    "dateOfBirth",
+                    "firstName",
+                    "investorRegNumber",
+                    "providerRegNumber",
+                    "startDate",
+                    "surname"
+                ]
+            },
+            "CloseAccountRequest":
+            {
+                "type": "object",
+                "properties":
+                {
+                    "providerRegNumber":
+                    {
+                        "type": "string",
+                        "description": "The tax registration number of the provider",
+                        "example": "01234567AB",
+                        "minLength": 1
+                    },
+                    "investorRegNumber":
+                    {
+                        "type": "string",
+                        "description": "The tax registration number of the investor",
+                        "example": "01234567AB",
+                        "minLength": 1
+                    },
+                    "endDate":
+                    {
+                        "type": "string",
+                        "example": "31/12/2027",
+                        "minLength": 1
+                    }
+                },
+                "required":
+                [
+                    "endDate",
+                    "investorRegNumber",
+                    "providerRegNumber"
+                ]
+            }
+        }
+    }
+}

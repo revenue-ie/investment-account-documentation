@@ -51,6 +51,26 @@
         "category": "navigation"
       },
       {
+        "link": "restApiReference/iia-schema.html",
+        "description": "REST API Reference",
+        "anchor": "REST_API_Reference",
+        "type": "Link",
+        "environment": "PIT Current Version",
+        "dateLastUpdated": "25/11/2026",
+        "category": "navigation",
+        "hidden": true
+      },
+      {
+        "link": "restApiReference/individual-investment-account-rest-api-swagger.json",
+        "description": "REST Open API Specification",
+        "anchor": "REST_Open_API_Specification",
+        "type": "API File",
+        "environment": "PIT Current Version",
+        "dateLastUpdated": "25/11/2026",
+        "category": "navigation",
+        "hidden": true
+      },
+      {
         "link": "restguide",
         "description": "REST Web Service Integration Guide",
         "anchor": "REST_Integration_Guide",
@@ -111,6 +131,15 @@
         "type": "PDF",
         "environment": "All Versions",
         "dateLastUpdated": "11/11/2026",
+        "category": "download"
+      },
+      {
+        "link": "Forum/slides/Investment Account Forum Meeting 3 Slides.pdf",
+        "description": "Forum 3 presentation slides",
+        "anchor": "Forum 3 Presentation",
+        "type": "PDF",
+        "environment": "All Versions",
+        "dateLastUpdated": "25/11/2026",
         "category": "download"
       }
     ]
